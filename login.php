@@ -3,19 +3,20 @@ include 'konek.php';
 session_start();
 if(isset($_POST['login'])){
 $username=$_POST['username'];
-$email=$_POST['email'];
 $password=$_POST['password'];
 
 
-if($email!="" && $password!=""){
-  $query=mysqli_query($koneksi, "select * from login where username='$username' and email='$email' and password='$password'"); 
+if($username!="" && $password!=""){
+
+  $query=mysqli_query($koneksi, "select * from user where username='$username' and password='$password'"); 
   if($data = mysqli_fetch_array($query)){
-    $_SESSION['username']=$data['username'];
+    $_SESSION['username']= $data['username'];
+    $_SESSION['id']=$data['id'];
     $_SESSION['email']=$data['email'];
+    $_SESSION['alamat']=$data['alamat'];
     $_SESSION['password']=$data['password'];
-    header('Location:eflyer-master/perulangan.php');
-  
-               
+    echo '<script language="javascript">
+   document.location="view/index.php";</script>';
   
 }else {
   echo'<script language="javascript">
@@ -37,6 +38,10 @@ if($email!="" && $password!=""){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
       * {
     margin: 0;
@@ -176,44 +181,6 @@ if($email!="" && $password!=""){
     border: none;
     padding: 0 30px;
     border-radius: 20px;
-  }
-  .login .container .login-form form button[type=submit] {
-    background: -webkit-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
-    background: -o-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
-    background: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
-    border: none;
-    margin-top: 124px;
-    margin-bottom: 20px;
-    width: 241px;
-    height: 58px;
-    text-transform: uppercase;
-    color: white;
-    border-radius: 10px;
-    position: relative;
-    z-index: 2;
-    font-weight: bold;
-    font-size: 20px;
-  }
-  .login .container .login-form form button[type=submit]:hover::after {
-    opacity: 1;
-  }
-  .login .container .login-form form button[type=submit]::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    border-radius: 10px;
-    opacity: 0;
-    top: 0;
-    left: 0;
-    -webkit-transition: 0.3s ease-in-out;
-    -o-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
-    right: 0;
-    bottom: 0;
-    background: -webkit-gradient(linear, left bottom, left top, from(#09203f), to(#537895));
-    background: -webkit-linear-gradient(bottom, #09203f 0%, #537895 100%);
-    background: -o-linear-gradient(bottom, #09203f 0%, #537895 100%);
-    background: linear-gradient(to top, #09203f 0%, #537895 100%);
   }
   .login .container .remember-form {
     position: relative;
@@ -424,27 +391,17 @@ if($email!="" && $password!=""){
     </div>
     
     <div class="login">
-      <div class="container">
+      <div class="container"  style="margin-top: -10px;">
         <h1>Login first to buy <br />your a handphone</h1>
     
-        <div class="login-form">
+        <div class="login-form"  style="margin-top: -5px;">
           <form action="login.php" method="post">
             <input type="text" placeholder="username" name="username">
-            <input type="text" placeholder="E-mail Address" name="email">
             <input type="password" placeholder="Password" name="password">
-
-            <div class="remember-form">
-              <input type="checkbox">
-              <span>Remember me</span><br>
-            </div>
-            <div class="forget-pass" style="bottom: 80px;">
-              <a href="#">Forgot Password ?</a><br><br>
-              <a href="register.php">Register now</a>
-
-            </div>
-
-            <button type="submit" name="login" value="login">Login</button>
-
+            
+            <button type="submit" name="login" class= "btn btn-primary">Login</button>
+            <a href="register.php" class="btn btn-secondary mt-2">Register</a>
+            
           </form>
         </div>
     

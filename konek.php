@@ -1,4 +1,3 @@
 <?php 
-$koneksi=mysqli_connect("localhost","root","","handphone");
-
+$koneksi=mysqli_connect("localhost","root","","handphone"); 
 ?>
